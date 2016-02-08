@@ -1,0 +1,955 @@
+AppaPath:
+  tableName: appa_path
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    dir:
+      type: string(256)
+      notnull: true
+    filename:
+      type: string(120)
+      notnull: true
+    full_path:
+      type: string(256)
+      notnull: true
+    ci_controller:
+      type: string(256)
+      notnull: true
+    ci_method:
+      type: string(256)
+      notnull: true
+    found:
+      type: integer(1)
+      notnull: true
+    public_flag:
+      type: integer(1)
+      notnull: true
+    permission_id:
+      type: integer(4)
+    note:
+      type: string(60)
+  relations:
+    AppaPermission:
+      local: permission_id
+      foreign: id
+      type: one
+AppaPermission:
+  tableName: appa_permission
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    name:
+      type: string(32)
+      notnull: true
+    internal_name:
+      type: string(60)
+      notnull: true
+    description:
+      type: string(64)
+  relations:
+    AppaPath:
+      local: id
+      foreign: permission_id
+      type: many
+    AppaRolePermission:
+      local: id
+      foreign: permission_id
+      type: many
+    AppaUserPermission:
+      local: id
+      foreign: permission_id
+      type: many
+AppaRole:
+  tableName: appa_role
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    name:
+      type: string(32)
+      notnull: true
+    description:
+      type: string(64)
+  relations:
+    AppaRolePermission:
+      local: id
+      foreign: role_id
+      type: many
+    AppaUserRole:
+      local: id
+      foreign: role_id
+      type: many
+AppaRolePermission:
+  tableName: appa_role_permission
+  columns:
+    id:
+      type: integer(8)
+      autoincrement: true
+      primary: true
+    role_id:
+      type: integer(4)
+      notnull: true
+    permission_id:
+      type: integer(4)
+      notnull: true
+  relations:
+    AppaRole:
+      local: role_id
+      foreign: id
+      type: one
+    AppaPermission:
+      local: permission_id
+      foreign: id
+      type: one
+AppaUser:
+  tableName: appa_user
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    username:
+      type: string(60)
+      notnull: true
+    password:
+      type: string(60)
+      notnull: true
+    email:
+      type: string(120)
+      notnull: true
+    active:
+      type: integer(1)
+      default: '1'
+      notnull: true
+    name:
+      type: string(60)
+    surname:
+      type: string(60)
+    last_ip:
+      type: string(40)
+    last_login:
+      type: timestamp(25)
+      default: '0000-00-00 00:00:00'
+      notnull: true
+    created:
+      type: timestamp(25)
+      default: '0000-00-00 00:00:00'
+      notnull: true
+    modified:
+      type: timestamp(25)
+      default: '0000-00-00 00:00:00'
+      notnull: true
+  relations:
+    AppaUserPermission:
+      local: id
+      foreign: user_id
+      type: many
+    AppaUserRole:
+      local: id
+      foreign: user_id
+      type: many
+AppaUserLoginAttempt:
+  tableName: appa_user_login_attempt
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    attempt_time:
+      type: timestamp(25)
+      notnull: true
+    username:
+      type: string(120)
+    ip_address:
+      type: string(120)
+      notnull: true
+    success:
+      type: integer(1)
+      notnull: true
+    user_agent:
+      type: string(180)
+    note:
+      type: string(80)
+AppaUserPermission:
+  tableName: appa_user_permission
+  columns:
+    id:
+      type: integer(8)
+      autoincrement: true
+      primary: true
+    user_id:
+      type: integer(4)
+      notnull: true
+    permission_id:
+      type: integer(4)
+      notnull: true
+  relations:
+    AppaPermission:
+      local: permission_id
+      foreign: id
+      type: one
+    AppaUser:
+      local: user_id
+      foreign: id
+      type: one
+AppaUserRole:
+  tableName: appa_user_role
+  columns:
+    id:
+      type: integer(8)
+      autoincrement: true
+      primary: true
+    user_id:
+      type: integer(4)
+      notnull: true
+    role_id:
+      type: integer(4)
+      notnull: true
+  relations:
+    AppaRole:
+      local: role_id
+      foreign: id
+      type: one
+    AppaUser:
+      local: user_id
+      foreign: id
+      type: one
+BalanceMes:
+  tableName: balance_mes
+  columns:
+    id:
+      type: integer(8)
+      primary: true
+      autoincrement: true
+    balance_id:
+      type: integer(8)
+      notnull: true
+    real_mes:
+      type: float()
+      notnull: true
+    created_at:
+      notnull: true
+      type: timestamp(25)
+    updated_at:
+      notnull: true
+      type: timestamp(25)
+  relations:
+    BalanceAlim:
+      local: balance_id
+      foreign: id
+      type: one
+BalanceAlim:
+  actAs: [Timestampable]
+  tableName: balance_alim
+  columns:
+    id:
+      type: integer(8)
+      primary: true
+      autoincrement: true
+    comedor_id:
+      type: integer(4)
+      notnull: true
+    fisico:
+      type: integer(4)
+      notnull: true
+    nivel_act:
+      type: integer(4)
+      notnull: true
+    almuerzo_evt:
+      type: integer(4)
+    merienda_evt:
+      type: integer(4)
+    comida_evt:
+      type: integer(4)
+    indice_comensal:
+      type: float()
+      notnull: true
+  relations:
+    Comedor:
+      local: comedor_id
+      foreign: id
+      type: one
+    BaseDatos:
+      local: id
+      foreign: balance_alim_id
+      type: many
+    BalanceMes:
+      local: id
+      foreign: balance_id
+      type: many
+BaseDatos:
+  actAs: [Timestampable]
+  tableName: base_datos
+  columns:
+    id:
+      type: integer(8)
+      primary: true
+      autoincrement: true
+    producto_id:
+      type: integer(4)
+      notnull: true
+    balance_alim_id:
+      type: integer(8)
+      notnull: true
+    ajuste:
+      type: float()
+      notnull: true
+  relations:
+    BalanceAlim:
+      local: balance_alim_id
+      foreign: id
+      type: one
+    Producto:
+      class: NomProducto
+      local: producto_id
+      foreign: id
+      type: one
+CiSessions:
+  tableName: ci_sessions
+  columns:
+    session_id:
+      type: string(40)
+      primary: true
+    ip_address:
+      type: string(16)
+      default: '0'
+      notnull: true
+    user_agent:
+      type: string(120)
+      notnull: true
+    last_activity:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      default: '0'
+      notnull: true
+    user_data:
+      type: string()
+      notnull: true
+Comedor:
+  tableName: comedor
+  columns:
+    id:
+      type: integer(4)
+      autoincrement: true
+      primary: true
+    entidad_id:
+      type: integer(4)
+      notnull: true
+    nombre_comedor_id:
+      type: integer(4)
+      notnull: true
+    reup:
+      type: string(10)
+      notnull: true
+    tc:
+      type: string(4)
+      notnull: true
+  relations:
+    TipoComedor:
+      class: NomComedor
+      local: nombre_comedor_id
+      foreign: id
+      type: one
+    Entidad:
+      class: NomEntidad
+      local: entidad_id
+      foreign: id
+      type: one
+    BalanceAlim:
+      local: id
+      foreign: comedor_id
+      type: many
+    Inventario:
+      local: id
+      foreign: comedor_id
+      type: many
+ConsumoInter:
+  tableName: consumo_inter
+  columns:
+    id:
+      type: integer(8)
+      primary: true
+      autoincrement: true
+    entidad_id:
+      type: integer(4)
+      notnull: true
+    producto_id:
+      type: integer(4)
+      notnull: true
+    cant:
+      type: float()
+      notnull: true
+    fecha:
+      type: date(25)
+      notnull: true
+  relations:
+    Entidad:
+      class: NomEntidad
+      local: entidad_id
+      foreign: id
+      type: one
+    Producto:
+      class: NomProducto
+      local: producto_id
+      foreign: id
+      type: one
+Eventos:
+  tableName: eventos
+  columns:
+    id:
+      type: integer(8)
+      primary: true
+      autoincrement: true
+    entidad_id:
+      type: integer(4)
+      notnull: true
+    producto_id:
+      type: integer(4)
+      notnull: true
+    concepto:
+      type: string(255)
+      notnull: true
+    cant:
+      type: float()
+      notnull: true
+    ajuste:
+      type: integer(4)
+      notnull: true
+    fecha:
+      type: date(25)
+      notnull: true
+  relations:
+    Entidad:
+      class: NomEntidad
+      local: entidad_id
+      foreign: id
+      type: one
+    Producto:
+      class: NomProducto
+      local: producto_id
+      foreign: id
+      type: one
+Inventario:
+  tableName: inventario
+  columns:
+    id:
+      type: integer(8)
+      primary: true
+      autoincrement: true
+    entidad_id:
+      type: integer(4)
+      notnull: true
+    producto_id:
+      type: integer(4)
+      notnull: true
+    cant:
+      type: float()
+      notnull: true
+    fecha:
+      type: date(25)
+      notnull: true
+  relations:
+    Entidad:
+      class: NomEntidad
+      local: entidad_id
+      foreign: id
+      type: one
+    Producto:
+      class: NomProducto
+      local: producto_id
+      foreign: id
+      type: one
+NomComedor:
+  tableName: nom_comedor
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(100)
+      notnull: true
+      unique: true
+    is_evento:
+      type: integer(1)
+      default: '0'
+      notnull: true
+    periodo:
+      type: float()
+      notnull: true
+  relations:
+    Comedor:
+      local: id
+      foreign: nombre_comedor_id
+      type: many
+NomEntidad:
+  tableName: nom_entidad
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(100)
+      notnull: true
+      unique: true
+    organismo_id:
+      type: integer(4)
+      notnull: true
+    reeup:
+      type: string(10)
+      notnull: true
+      unique: true
+  relations:
+    Organismo:
+      class: NomOrganismo
+      local: organismo_id
+      foreign: id
+      type: one
+    Comedor:
+      local: id
+      foreign: entidad_id
+      type: many
+    ConsumoInter:
+      local: id
+      foreign: entidad_id
+      type: many
+    Eventos:
+      local: id
+      foreign: entidad_id
+      type: many
+    OrgNominalizado:
+      local: id
+      foreign: entidad_id
+      type: many
+NomFuentes:
+  tableName: nom_fuentes
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(100)
+      notnull: true
+      unique: true
+  relations:
+    ProductoFuentes:
+      local: id
+      foreign: fuentes_id
+      type: many
+NomMunicipio:
+  tableName: nom_municipio
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    provincia_id:
+      type: integer(4)
+      notnull: true
+    nombre:
+      type: string(60)
+      notnull: true
+      unique: true
+  relations:
+    Provincia:
+      class: NomProvincia
+      local: provincia_id
+      foreign: id
+      type: one
+NomOrganismo:
+  tableName: nom_organismo
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    subordinacion_id:
+      type: integer(4)
+      notnull: true
+    nombre:
+      type: string(100)
+      notnull: true
+      unique: true
+    is_cap:
+      type: integer(1)
+      default: '0'
+      notnull: true
+    is_nominalizado:
+      type: integer(1)
+      default: '0'
+      notnull: true
+  relations:
+    Subordinacion:
+      class: NomSubordinacion
+      local: subordinacion_id
+      foreign: id
+      type: one
+    Entidades:
+      class: NomEntidad
+      local: id
+      foreign: organismo_id
+      type: many
+NomProducto:
+  tableName: nom_producto
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(255)
+      notnull: true
+      unique: true
+    um_id:
+      type: integer(4)
+      notnull: true
+    proveedor_id:
+      type: integer(4)
+      notnull: true
+    norma:
+      type: float()
+      notnull: true
+  relations:
+    Um:
+      class: NomUm
+      local: um_id
+      foreign: id
+      type: one
+    Proveedor:
+      class: NomProveedor
+      local: proveedor_id
+      foreign: id
+      type: one
+    BaseDatos:
+      local: id
+      foreign: producto_id
+      type: many
+    ConsumoInter:
+      local: id
+      foreign: producto_id
+      type: many
+    Eventos:
+      local: id
+      foreign: producto_id
+      type: many
+    Inventario:
+      local: id
+      foreign: producto_id
+      type: many
+    OrgNominalizado:
+      local: id
+      foreign: producto_id
+      type: many
+    ProductoFuentes:
+      local: id
+      foreign: producto_id
+      type: many
+    ActividadProducto:
+      local: id
+      foreign: producto_id
+      type: many
+NomProveedor:
+  tableName: nom_proveedor
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(255)
+      notnull: true
+      unique: true
+  relations:
+    Productos:
+      class: NomProducto
+      local: id
+      foreign: proveedor_id
+      type: many
+NomProvincia:
+  tableName: nom_provincia
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(50)
+      notnull: true
+      unique: true
+  relations:
+    Municipios:
+      class: NomMunicipio
+      local: id
+      foreign: provincia_id
+      type: many
+NomSubordinacion:
+  tableName: nom_subordinacion
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(255)
+      notnull: true
+      unique: true
+  relations:
+    Organismos:
+      class: NomOrganismo
+      local: id
+      foreign: subordinacion_id
+      type: many
+NomUm:
+  tableName: nom_um
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(255)
+      notnull: true
+      unique: true
+      
+OrgNominalizado:
+  tableName: org_nominalizado
+  columns:
+    id:
+      type: integer(8)
+      primary: true
+      autoincrement: true
+    entidad_id:
+      type: integer(4)
+      notnull: true
+    producto_id:
+      type: integer(4)
+      notnull: true
+    ctd:
+      type: float()
+      notnull: true
+    fecha:
+      type: date(25)
+      notnull: true
+  relations:
+    Entidad:
+      class: NomEntidad
+      local: entidad_id
+      foreign: id
+      type: one
+    Producto:
+      class: NomProducto
+      local: producto_id
+      foreign: id
+      type: one
+ProductoFuentes:
+  tableName: producto_fuentes
+  columns:
+    id:
+      type: integer(8)
+      primary: true
+      autoincrement: true
+    producto_id:
+      type: integer(4)
+      notnull: true
+    fuentes_id:
+      type: integer(4)
+      notnull: true
+    cant:
+      type: float()
+      notnull: true
+    fecha:
+      type: date(25)
+      notnull: true
+  relations:
+    Producto:
+      class: NomProducto
+      local: producto_id
+      foreign: id
+      type: one
+    Fuente:
+      class: NomFuentes
+      local: fuentes_id
+      foreign: id
+      type: one
+Disponibilidad:
+  tableName: disponibilidad
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    producto_id:
+      type: integer(4)
+      notnull: true
+    saldo:
+      type: float()
+      notnull: true
+    fecha:
+      type: date(25)
+      notnull: true
+  relations:
+    Producto:
+      class: NomProducto
+      local: producto_id
+      foreign: id
+      type: one
+Boleta:
+  tableName: boleta
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    entidad_id:
+      type: integer(4)
+      notnull: true
+    consec:
+      type: integer(4)
+      notnull: true
+    fecha:
+      type: date(25)
+      notnull: true
+    proveedor_id:
+      type: integer(4)
+      notnull: true
+  relations:
+    Entidad:
+      class: NomEntidad
+      local: entidad_id
+      foreign: id
+      type: one
+    Proveedor:
+      class: NomProveedor
+      local: proveedor_id
+      foreign: id
+      type: one
+NomActividad:
+  tableName: nom_actividad
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(255)
+      notnull: true
+      unique: true
+  relations:
+    ActividadProducto:
+      local: id
+      foreign: actividad_id
+      type: many	  
+ActividadProducto:
+  tableName: actividad_producto
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    producto_id:
+      type: integer(4)
+      notnull: true
+    actividad_id:
+      type: integer(4)
+      notnull: true
+    plan:
+      type: float()
+      notnull: true
+    actual:
+      type: float()
+      notnull: true
+    fecha:
+      type: date(25)
+      notnull: true
+  relations:
+    Producto:
+      class: NomProducto
+      local: producto_id
+      foreign: id
+      type: one
+    Actividad:
+      class: NomActividad
+      local: actividad_id
+      foreign: id
+      type: one
+BoletaProducto:
+  tableName: boleta_producto
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    producto_id:
+      type: integer(4)
+      notnull: true
+    cantidad:
+      type: float()
+      notnull: true
+    boleta_id:
+      type: integer(4)
+      notnull: true
+  relations:
+    Producto:
+      class: NomProducto
+      local: producto_id
+      foreign: id
+      type: one
+    Boleta:
+      class: Boleta
+      local: boleta_id
+      foreign: id
+      type: one
+NomMercado:
+  tableName: nom_mercado
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    nombre:
+      type: string(100)
+      notnull: true
+      unique: true
+    relations:
+    ProductoMercado:
+      local: id
+      foreign: mercado_id
+      type: many
+ProductoMercado:
+  tableName: producto_mercado
+  columns:
+    id:
+      type: integer(8)
+      primary: true
+      autoincrement: true
+    producto_id:
+      type: integer(4)
+      notnull: true
+    mercado_id:
+      type: integer(4)
+      notnull: true
+    cant:
+      type: float()
+      notnull: true
+    fecha:
+      type: date(25)
+      notnull: true
+  relations:
+    Producto:
+      class: NomProducto
+      local: producto_id
+      foreign: id
+      type: one
+    Mercado:
+      class: NomMercado
+      local: mercado_id
+      foreign: id
+      type: one

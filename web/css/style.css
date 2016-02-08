@@ -1,0 +1,120 @@
+.icon-grid {
+    background-image:url(../images/icons/fam/grid.png) !important;
+}
+.add {
+    background-image:url(../images/icons/fam/plus.png) !important;
+}
+.accept {
+    background-image:url(../images/icons/fam/accept.gif) !important;
+}
+.consecutivo {
+    background-image:url(../images/icons/fam/folder_wrench.png) !important;
+}
+.option {
+    background-image:url(../images/icons/fam/plugin.gif) !important;
+}
+.remove {
+    background-image:url(../images/icons/fam/delete.gif) !important;
+}
+.folder {
+    background-image:url(../images/icons/fam/folder.png) !important;
+}
+.help {
+    background-image:url(../images/icons/fam/icon-question.gif) !important;
+}
+.save {
+    background-image:url(../images/icons/save.gif) !important;
+}
+.group .x-grid-cell-inner {
+    padding-left: 25px;
+}
+.x-grid-row-summary .x-grid-cell-inner {
+    font-size: 11px;
+    font-weight: bold;
+}
+.logged {
+    background-image: url( ../images/icons/fam/member.png ) !important;
+}
+.closesession{
+    background: url(../images/icons/fam/offActive.png)  0px no-repeat !important;
+}
+.exportar{
+    background: url(../images/icons/fam/export.gif)  0px no-repeat !important;
+}
+.reporte{
+    background: url(../images/icons/fam/reporte.gif)  0px no-repeat !important;
+}
+.preview{
+    background: url(../images/icons/fam/grid.png)  0px no-repeat !important;
+}
+.edit{
+    background: url(../images/icons/fam/edit.png)  0px no-repeat !important;
+}
+.pdf{
+    background: url(../images/icons/fam/pdf.gif)  0px no-repeat !important;
+}
+.xls{
+    background: url(../images/icons/fam/xls.gif)  0px no-repeat !important;
+}
+.config{
+    background: url(../images/icons/fam/config.png)  0px no-repeat !important;
+}
+.category{
+    background: url(../images/icons/fam/category.png)  0px no-repeat !important;
+}
+.settings{
+    background: url(../images/icons/fam/settings.png)  0px no-repeat !important;
+}
+.archives{
+    background: url(../images/icons/fam/archives.png)  0px no-repeat !important;
+}
+.alert{
+    background: url(../images/icons/fam/alert2.png)  0px no-repeat !important;
+}
+.back{
+    background: url(../images/icons/fam/arrow-curve-180.png)  0px no-repeat !important;
+}
+.chaticon{
+    background: url(../images/icons/fam/user_comment.png)  0px no-repeat !important;
+}
+.sitemap{
+    background: url(../images/icons/fam/sitemap.png)  0px no-repeat !important;
+}
+.product{
+    background: url(../images/icons/fam/product.png)  0px no-repeat !important;
+}
+.msg .x-box-mc {
+    font-size:14px;
+}
+#msg-div {
+    position:absolute;
+    left:50%;
+    top:10px;
+    width:400px;
+    margin-left:-200px;
+    z-index:20000;
+}
+#msg-div .msg {
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    background: #F6F6F6;
+    border: 2px solid #ccc;
+    margin-top: 2px;
+    padding: 10px 15px;
+    color: #555;
+}
+#msg-div .msg h3 {
+    margin: 0 0 8px;
+    font-weight: bold;
+    font-size: 15px;
+}
+#msg-div .msg p {
+    margin: 0;
+}
+.x-message-box .ext-mb-download {
+    background: url(../images/download.gif) no-repeat scroll 6px 0px transparent;
+    height: 52px!important;
+}
+.x-tree-node-text{
+  cursor: pointer;
+}

@@ -1,0 +1,9 @@
+db:
+  default:
+    hostname: "localhost" 
+    username: "root"
+    password: ""
+    database: "alimentos"
+    dbdriver: "mysql"
+    char_set: "utf8"
+  

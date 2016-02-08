@@ -1,0 +1,33 @@
+<?php
+	// poner esto al inicio del fichero si es unix el SO #!/usr/bin/env php
+	
+	define('BASEPATH', str_replace("\\", "/", realpath(dirname(__FILE__).'/../system')));
+	// The path to the "application" folder
+	$application_folder = realpath(dirname(__FILE__));
+	if (is_dir($application_folder))
+	{
+		define('APPPATH', $application_folder.'/');
+	}
+	else
+	{
+		if ( ! is_dir(BASEPATH.$application_folder.'/'))
+		{
+			exit("Your application folder path does not appear to be set correctly. Please open the following file and correct this: ".SELF);
+		}
+
+		define('APPPATH', BASEPATH.$application_folder.'/');
+	}
+	
+	chdir(dirname(__FILE__));	
+	require_once(realpath(dirname(__FILE__).'/../system/libraries/Doctrine.php')); 
+    
+    //Fix para error con modelos cuando heredan de CI_Model
+    require_once BASEPATH.'/core/Model.php';
+    
+	$setup = new Doctrine(false);
+	$setup->changeDBConfig('default',realpath(dirname(__FILE__).'/config/database.yml'));
+	$setup->commandLine();
+	
+	//echo APPPATH;
+	//echo realpath(dirname(__FILE__));
+?>
